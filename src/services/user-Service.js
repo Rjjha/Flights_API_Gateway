@@ -103,10 +103,32 @@ async function isAdmin(id) {
     }
 }
 
+async function isFlightCompany(id) {
+    try {
+      const user = await userRepo.get(id);
+      if (!user) {
+        throw new AppError(
+          "For the given id, no users were found",
+          StatusCodes.NOT_FOUND
+        );
+      }
+      const flight_companyrole = await roleRepo.getRoleByName(FLIGHT_COMPANY);
+  
+      return user.hasRole(flight_companyrole); // hasRole() is a magic method inside sequelize | LINK -> https://medium.com/@julianne.marik/sequelize-associations-magic-methods-c72008db91c9
+    } catch (error) {
+      console.log(error);
+      if (error instanceof AppError) throw error;
+      throw new AppError(
+        "INTERNAL SERVER ERROR | Something went wrong",
+        StatusCodes.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
 module.exports ={
     create,
     signIn,
     isAuthenticated,
     addRoletoUser,
-    isAdmin
+    isAdmin,
+    isFlightCompany
 }

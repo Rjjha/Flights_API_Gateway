@@ -20,5 +20,5 @@ router.post('/signin',AuthMiddleware.validateAuthRequest, UserController.signin)
  * req-body {role: 'admin', id: '3'}
  * header {x-access-token : token}
  */
-router.post('/role',AuthMiddleware.checkAuth, AuthMiddleware.isAdmin, UserController.addRoleToUser);
+router.post('/role',AuthMiddleware.validateAddRoleRequest,AuthMiddleware.checkAuth, AuthMiddleware.isAdmin, UserController.addRoleToUser);
 module.exports = router;
