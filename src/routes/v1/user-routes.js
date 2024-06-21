@@ -3,6 +3,13 @@ const { UserController } = require('../../controllers');
 const { AuthMiddleware } = require('../../middlewares');
 const router = express.Router();
 
+/*GET , api/v1/user/:id
+req.body={}*/ 
+router.get('/:id',
+    UserController.getUser
+ )
+ 
+
 /**
  * POST : /signup 
  * req-body {email: 'a@b.com', password: '1234'}

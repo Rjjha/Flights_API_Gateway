@@ -124,11 +124,28 @@ async function isFlightCompany(id) {
       );
     }
   }
+
+  /*GET , api/v1/airplanes/:id
+req.body={}*/ 
+async function getUser(id) 
+{
+   try {
+     const airplane = await userRepo.get(id);
+     return airplane;
+   } catch (error) {
+      if(error.statusCode == StatusCodes.NOT_FOUND)
+         {
+            throw new AppError('Airplane you requested not found',StatusCodes.NOT_FOUND);
+         }
+      throw new AppError('Cannot fetch data of Airplanes',StatusCodes.INTERNAL_SERVER_ERROR);
+   }
+}
 module.exports ={
     create,
     signIn,
     isAuthenticated,
     addRoletoUser,
     isAdmin,
-    isFlightCompany
+    isFlightCompany,
+    getUser,
 }
